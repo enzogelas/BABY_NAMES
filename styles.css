@@ -1,0 +1,22 @@
+div{
+    display: flex;
+    align-items: center;
+}
+
+.ver{
+    flex-direction: column;
+}
+
+.hor{
+    width: 100%;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.hor .ver{
+    width: 40%;
+}
+
+input{
+    width: 100%;
+}
