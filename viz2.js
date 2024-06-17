@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error loading CSV:', error);
         });*/
 
-        fetch('dpt2020_1.json')
+        fetch('dpt2020.json')
             .then(response => response.json())
             .then(data => {
                 console.log("I read the json");
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 })
                 console.log("Colors created for names");
-            })            
+            })
 
 });
 
