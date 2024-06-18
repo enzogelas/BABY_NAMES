@@ -6,18 +6,26 @@ let svgContainer;
 let paths;
 let labels = Array(96);
 
+let mode = 0;
+let searchedName = '';
+
 document.addEventListener('DOMContentLoaded', function () {
     svgContainer = document.getElementById('france-container');
 
-    fetch('france.svg') // Replace with the actual path to your SVG file
+
+    // Creating the display of the svg france
+    fetch('france.svg') 
         .then(response => response.text())
         .then(svgContent => {
             svgContainer.innerHTML = svgContent; // Inject the SVG into the container
 
             // Now select all paths with class 'region'
             paths = svgContainer.querySelectorAll('.region');
-
+            
+            // Animation when the mouse hover
+            
             paths.forEach(function (path) {
+                /*
                 path.addEventListener('mouseover', function () {
                     path.style.fillOpacity = '0.2';
                 });
@@ -25,40 +33,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 path.addEventListener('mouseout', function () {
                     path.style.fillOpacity = '1';
                 });
+                */
 
-                labels[parseInt(path.id)] = createLabel(path,"Hello !");
+                labels[parseInt(path.id)] = createLabel(path,"");
             });
 
             console.log("Completed !!");
-            //console.log(labels);
+            
+
         })
         .catch(error => console.error('Error loading the SVG:', error));
 
-        
-        /*d3.csv('dpt2020.csv').then(function(data) {
-
-            data.forEach(function (element) {
-                let values = Object.values(element);
-                all_data.push([parseInt(values[0]), values[1], parseInt(values[2]), parseInt(values[3]), parseInt(values[4])]);
-            });
-
-            console.log("Array constructed !!!"); 
-            document.getElementById('title').textContent = "Now enjoy !!"; 
-
-        }).catch(function(error) {
-            console.error('Error loading CSV:', error);
-        });*/
-
+        // Loading of the data
         fetch('dpt2020.json')
             .then(response => response.json())
             .then(data => {
                 console.log("I read the json");
+
+                // Raw data
                 all_data = data;
 
-                console.log("Array constructed !!!"); 
-                document.getElementById('title').textContent = "Now enjoy !!"; 
-
-                
+                // Sorting data per year
                 all_data.forEach(element => {
                     const year = element[2];
                     if (year>=1900 && year<=2020){
@@ -67,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
                 console.log("Data sorted per year !");
 
+                // Creating random colors for each name
                 all_data.forEach(element => {
                     const name = element[1];
                     if (!(name in colorPerName)){
@@ -74,10 +70,67 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 })
                 console.log("Colors created for names");
+
+                document.getElementById('title').textContent = "Explore the names in France"; 
             })
+
+        // Slider management
+
+        // SLiders
+        let minYearInput = document.getElementById('minYear');
+        let maxYearInput = document.getElementById('maxYear');
+        // Values displayed below sliders
+        let minYearDisplay = document.getElementById('minYearValue');
+        let maxYearDisplay = document.getElementById('maxYearValue');
+        // Year Interval 
+        let minYear = 1900;
+        let maxYear = 2020;
+
+        document.getElementById('minYear').addEventListener('input', () => {
+            minYear = parseInt(minYearInput.value);
+            if (minYear>maxYear){
+                maxYearInput.value = minYear.toString();
+                maxYear=minYear;
+                maxYearDisplay.textContent = maxYear.toString();
+            }
+            minYearDisplay.textContent = minYear.toString();
+            if(mode==1) showDataManyYears(minYear,maxYear);
+            if(mode==2) showDataByName(searchedName,minYear,maxYear);
+        });
+
+        document.getElementById('maxYear').addEventListener('input', () => {
+            maxYear = parseInt(maxYearInput.value);
+            if (minYear>maxYear){
+                minYearInput.value = maxYear.toString();
+                minYear=maxYear;
+                minYearDisplay.textContent = minYear.toString();
+            }
+            maxYearDisplay.textContent = maxYear.toString();
+            if(mode==1) showDataManyYears(minYear,maxYear);
+            if(mode==2) showDataByName(searchedName,minYear,maxYear);
+        });
+
+        //Mode management
+        document.getElementById('mode1').addEventListener('click', (event) => {
+            mode = 1;
+            console.log("Search by most popular");
+        })
+
+        document.getElementById('mode2').addEventListener('click', (event) => {
+            mode = 2;
+            console.log("Search by name");
+        })
+
+        //Search by name management
+        document.getElementById('SEARCH_BY_NAME').addEventListener('click', () => {
+            searchedName = document.getElementById('inputName').value.toUpperCase();
+            console.log(searchedName);
+            showDataByName(searchedName,minYear,maxYear);
+        })
 
 });
 
+// Function to add a label in the center of a svg path (Only used at loading page at the beginning)
 function createLabel(path,labelText){
 
     const bbox = path.getBBox();
@@ -100,7 +153,7 @@ function createLabel(path,labelText){
     return text;
 }
 
-// It show the most popular name for a fixed year
+// It show the most popular name for a fixed year (not used anymore but interesting)
 function showDataOneYear(year){ 
 
     let maxPerDpt = Array(96).fill(0);
@@ -154,7 +207,7 @@ function showDataManyYears(min, max){
     }
 
     // Finding the most popular name per dpt between min and max year
-    for (let dpt=1; dpt<95; dpt++){
+    for (let dpt=1; dpt<=95; dpt++){
         let popularName = '';
         let maxPopularity = 0;
         const obj = allNamesPerDpt[dpt];
@@ -177,32 +230,46 @@ function showDataManyYears(min, max){
     })
 }
 
+function showDataByName(searchedName,min,max){
+    console.log(min,max);
 
-let minYearInput = document.getElementById('minYear');
-let maxYearInput = document.getElementById('maxYear');
-let minYearDisplay = document.getElementById('minYearValue');
-let maxYearDisplay = document.getElementById('maxYearValue');
-let minYear = 1900;
-let maxYear = 2020;
+    // To count the occurence of each name in each dpt
+    let countPerDpt = Array(96).fill(0);
 
-document.getElementById('minYear').addEventListener('input', () => {
-    minYear = parseInt(minYearInput.value);
-    if (minYear>maxYear){
-        maxYearInput.value = minYear.toString();
-        maxYear=minYear;
-        maxYearDisplay.textContent = maxYear.toString();
+    // Computing the occurence of each name per dpt between min and max year
+    for(let year=min; year<=max; year++){
+
+        data_per_year[year].forEach(element => {
+            const dpt = element[3];
+            const name = element[1];
+
+            if(dpt<=95 && name==searchedName){ //To exclude non wanted dpt
+                countPerDpt[dpt] = countPerDpt[dpt] + element[4];   
+            }
+
+        });
     }
-    minYearDisplay.textContent = minYear.toString();
-    showDataManyYears(minYear,maxYear);
-})
 
-document.getElementById('maxYear').addEventListener('input', () => {
-    maxYear = parseInt(maxYearInput.value);
-    if (minYear>maxYear){
-        minYearInput.value = maxYear.toString();
-        minYear=maxYear;
-        minYearDisplay.textContent = minYear.toString();
+    let minCount = countPerDpt[0];
+    let maxCount = countPerDpt[0];
+    for(let j=1; j<=95; j++){
+        let value = countPerDpt[j];
+        if(value>max) maxCount=value;
+        if(value<min) minCount=value;
     }
-    maxYearDisplay.textContent = maxYear.toString();
-    showDataManyYears(minYear,maxYear);
-})
+
+    function fromValueToColor(value){
+        let scaledValue = 255 - Math.round((value-minCount)/(maxCount-minCount) * 255);
+        let hex = scaledValue.toString(16);
+        return "#"+hex+"0000";
+    }
+
+    // Modifying the view
+    paths.forEach(path => {
+        const dpt = parseInt(path.id);
+
+        labels[dpt].textContent = countPerDpt[dpt].toString();
+        path.style.fill = fromValueToColor(countPerDpt[dpt]);
+    })
+}
+

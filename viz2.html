@@ -8,18 +8,34 @@
         
     </head>
     <body>
-        <div class="ver">
+        <div class="ver" id="MAIN_DIV">
             <h1 id="title">Wait ...</h1>
+            <h2>Modes</h2>
+            <div class="hor, wide" id="MODE_CHOICE">
+                <div class="ver">
+                    <input type="radio" id="mode1" name="mode">
+                    <span>Most popular name</span>
+                </div>
+                <div class="ver">
+                    <input type="radio" id="mode2" name="mode">
+                    <span>Search by name</span>
+                    <div class="hor">
+                        <input type="text" id="inputName">
+                        <button id="SEARCH_BY_NAME">Search</button>
+                    </div>
+                    
+                </div>
+            </div>
 
             <div id="france-container"></div>
             
-            <div class="hor">
-                <div class="ver">
+            <div class="hor, wide">
+                <div class="ver, large">
                     <span>From</span>
                     <input id="minYear" type="range" min="1900" max="2020" value="1900">
                     <span id="minYearValue">1900</span>
                 </div>
-                <div class="ver">
+                <div class="ver, large">
                     <span>To</span>
                     <input id="maxYear" type="range" min="1900" max="2020" value="2020">
                     <span id="maxYearValue">2020</span>

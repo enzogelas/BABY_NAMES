@@ -5,18 +5,30 @@ div{
 
 .ver{
     flex-direction: column;
+    justify-content: flex-start;
 }
 
 .hor{
+    flex-direction: row;
+}
+
+.wide{
     width: 100%;
     justify-content: space-around;
-    flex-direction: row;
+}
+
+.large{
+    width: 40%;
 }
 
 .hor .ver{
     width: 40%;
 }
 
-input{
+input[type="range"]{
     width: 100%;
+}
+
+#MODE_CHOICE{
+    margin-bottom: 30px;
 }
