@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Visualization</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas"></canvas>
+    <div class="hor, wide">
+        <div class="ver, large">
+            <span>From</span>
+            <span id="minYearValue">1900</span>
+            <input id="minYear" type="range" min="1900" max="2020" value="1900" width="100%">
+        </div>
+        <div class="ver, large">
+            <span>To</span>
+            <span id="maxYearValue">2020</span>
+            <input id="maxYear" type="range" min="1900" max="2020" value="2020" width="100%">
+        </div>
+    </div>
+    <script src="viz3.js"></script>
+</body>
+
+</html>
