@@ -90,8 +90,6 @@ function draw() {
         }
         ctx.stroke();
     }
-
-
 }
 
 function start() {
