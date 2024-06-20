@@ -51,8 +51,18 @@ function draw() {
         let [name, i_start, i_end] = best_name_periods_masc[i];
         let x = (i_start + i_end) / 2;
         let y = 50;
+        // Compute the width of the text
+        let text_width = ctx.measureText(name).width;
+        if (text_width > bar_width * (i_end - i_start)) {
+            ctx.font = "10px Arial";
+            text_width = ctx.measureText(name).width;
+        } // If the text still doesn't fit
+        if (text_width < bar_width * (i_end - i_start)) {
+            ctx.fillStyle = "black";
+            ctx.fillText(name, (x - minYear) * bar_width - text_width / 2, y);
 
-        ctx.fillText(name, (x - minYear) * bar_width, y);
+        }
+        ctx.font = "20px Arial";
     }
 
     for (let i = minYear; i <= maxYear; i++) {
@@ -80,7 +90,30 @@ function draw() {
         let [name, i_start, i_end] = best_name_periods_fem[i];
         let x = (i_start + i_end) / 2;
         let y = 150;
-        ctx.fillText(name, (x - minYear) * bar_width, y);
+        // Compute the width of the text
+        let text_width = ctx.measureText(name).width;
+        if (text_width > bar_width * (i_end - i_start)) {
+            ctx.font = "10px Arial";
+            text_width = ctx.measureText(name).width;
+        } // If the text still doesn't fit
+        if (text_width < bar_width * (i_end - i_start))
+            ctx.fillText(name, (x - minYear) * bar_width - text_width / 2, y);
+        ctx.font = "20px Arial";
+    }
+
+    // Draw strokes to indicate the years
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 1;
+
+    for (let i = minYear; i <= maxYear; i++) {
+        ctx.lineWidth = i % 10 === 0 ? 2 : 1;
+        ctx.beginPath();
+        ctx.moveTo((i - minYear) * bar_width, i % 10 === 0 ? 180 : 190);
+        ctx.lineTo((i - minYear) * bar_width, 200);
+        if (i % 10 === 0) {
+            ctx.fillText(i.toString(), (i - minYear) * bar_width, 190);
+        }
+        ctx.stroke();
     }
 
 
