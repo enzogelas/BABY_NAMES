@@ -11,46 +11,42 @@ let maxYear = 2020;
 
 let best_name_per_year = Array.from({ length: 2021 }, () => "");
 
-function draw() {
+function drawDataViz(gender) {
     // Get the context of the canvas
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
-
-    // Clear the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     let interval = maxYear - minYear + 1;
 
     let bar_width = canvas.width / interval;
 
-    let best_name_periods_masc = [];
-    let best_name_periods_fem = [];
+    let best_name_periods = [];
 
     for (let i = minYear; i <= maxYear; i++) {
-        let j_masc = i;// end of the interval with the same name
+        let j = i;// end of the interval with the same name
 
-        while (j_masc <= maxYear && best_name_per_year[j_masc][0] === best_name_per_year[i][0]) {
-            j_masc++;
+        while (j <= maxYear && best_name_per_year[j][gender * 2] === best_name_per_year[i][gender * 2]) {
+            j++;
         }
-        let best_name_masc = best_name_per_year[i][0];
+        let best_name = best_name_per_year[i][gender * 2];
 
-        let color_masc = colorPerName[best_name_masc];
+        let color = colorPerName[best_name];
 
-        ctx.fillStyle = color_masc;
-        ctx.fillRect((i - minYear) * bar_width, 0, bar_width * (j_masc - i), 100);
+        ctx.fillStyle = color;
+        ctx.fillRect((i - minYear) * bar_width, 100 * gender, bar_width * (j - i), 100);
 
-        best_name_periods_masc.push([best_name_masc, i, j_masc]);
+        best_name_periods.push([best_name, i, j]);
 
-        i = j_masc - 1;
+        i = j - 1;
     }
 
     // Draw the name labels
     ctx.font = "20px Arial";
     ctx.fillStyle = "black";
-    for (let i = 0; i < best_name_periods_masc.length; i++) {
-        let [name, i_start, i_end] = best_name_periods_masc[i];
+    for (let i = 0; i < best_name_periods.length; i++) {
+        let [name, i_start, i_end] = best_name_periods[i];
         let x = (i_start + i_end) / 2;
-        let y = 50;
+        let y = 50 + gender * 100;
         // Compute the width of the text
         let text_width = ctx.measureText(name).width;
         if (text_width > bar_width * (i_end - i_start)) {
@@ -60,46 +56,25 @@ function draw() {
         if (text_width < bar_width * (i_end - i_start)) {
             ctx.fillStyle = "black";
             ctx.fillText(name, (x - minYear) * bar_width - text_width / 2, y);
-
         }
         ctx.font = "20px Arial";
     }
+}
 
-    for (let i = minYear; i <= maxYear; i++) {
-        let j_fem = i;// end of the interval with the same name
+function draw() {
+    // Get the context of the canvas
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
 
-        while (j_fem <= maxYear && best_name_per_year[j_fem][2] === best_name_per_year[i][2]) {
-            j_fem++;
-        }
-        let best_name_fem = best_name_per_year[i][2];
+    let interval = maxYear - minYear + 1;
 
-        let color_fem = colorPerName[best_name_fem];
+    let bar_width = canvas.width / interval;
 
-        ctx.fillStyle = color_fem;
-        ctx.fillRect((i - minYear) * bar_width, 100, bar_width * (j_fem - i), 100);
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        best_name_periods_fem.push([best_name_fem, i, j_fem]);
-
-        i = j_fem - 1;
-    }
-
-    // Draw the name labels
-    ctx.font = "20px Arial";
-    ctx.fillStyle = "black";
-    for (let i = 0; i < best_name_periods_fem.length; i++) {
-        let [name, i_start, i_end] = best_name_periods_fem[i];
-        let x = (i_start + i_end) / 2;
-        let y = 150;
-        // Compute the width of the text
-        let text_width = ctx.measureText(name).width;
-        if (text_width > bar_width * (i_end - i_start)) {
-            ctx.font = "10px Arial";
-            text_width = ctx.measureText(name).width;
-        } // If the text still doesn't fit
-        if (text_width < bar_width * (i_end - i_start))
-            ctx.fillText(name, (x - minYear) * bar_width - text_width / 2, y);
-        ctx.font = "20px Arial";
-    }
+    drawDataViz(0);
+    drawDataViz(1);
 
     // Draw strokes to indicate the years
     ctx.strokeStyle = "black";
