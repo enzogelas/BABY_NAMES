@@ -85,7 +85,7 @@ let timer = null;
 function startPlaying(){
     console.log("started playing !");
 
-    timer = setInterval(play, 1000);
+    timer = setInterval(play, 500);
     
 }
 
@@ -105,8 +105,17 @@ function play(){
 function updateBars(){
     let year = parseInt(document.getElementById("year").value);
 
-    groupByNameForYear(year);
+    let nameCount = groupByNameForYear(year)[0];
+    let ten_best_names = groupByNameForYear(year)[1];
     
+    //let scale_factor = 
+
+    for(let i=0; i<10; i++) {
+        document.getElementById("name" + i).innerHTML = ten_best_names[i];
+        console.log(nameCount[ten_best_names[i]]);
+        document.getElementById("value" + i).setAttribute("width", nameCount[ten_best_names[i]]/100);
+    }
+
 }
 
 function groupByNameForYear(year) {
@@ -122,9 +131,6 @@ function groupByNameForYear(year) {
             nameCount[name] += element[4]
         }
     })
-
-    console.log("Names counted for year " + year);
-
 
     let ten_best_names = [];
 
@@ -142,6 +148,6 @@ function groupByNameForYear(year) {
         ten_best_names.push(maxName);
     }
 
-    return ten_best_names;
+    return [nameCount, ten_best_names];
 
 }
