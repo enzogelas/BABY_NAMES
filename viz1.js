@@ -10,12 +10,14 @@ let best_10names_per_year = Array.from({ length: 2021 }, () => [],[]); //indice 
 let mode = 0;
 let searchedName = '';
 
+document.getElementById("yearValue").innerHTML = document.getElementById("year").value;
+
+
 document.addEventListener('DOMContentLoaded', function () {
     svgContainer = document.getElementById('race-container');
 
 
     // Creating the display of the svg bars
-    console.log("test")
 
         // Loading of the data
         fetch('dpt2020.json')
@@ -77,15 +79,22 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     
 
+let timer = null;
+
 function startPlaying(){
-    let startYear = document.getElementById("yearValue");
     console.log("started playing !");
-    console.log(startYear);
-    setInterval(play, 10000*(2020-startYear));
+
+    timer = setInterval(play, 1000);
+    
 }
 
 function play(){
-    //document.getElementById("year").value +=1;
-    //document.getElementById("yearValue").innerHTML = document.getElementById("year").value;
+
+    document.getElementById("year").value = parseInt(document.getElementById("year").value) + 1;
+    document.getElementById("yearValue").innerHTML = document.getElementById("year").value;
+    
+    if(parseInt(document.getElementById("year").value)>=2020){
+        clearInterval(timer);
+    }
     
 }
