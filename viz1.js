@@ -6,7 +6,7 @@ let svgContainer;
 let paths;
 let labels = Array(96);
 
-
+let best_10names_per_year = Array.from({ length: 2021 }, () => [],[]); //indice annee,  [compte],[noms]
 let mode = 0;
 let searchedName = '';
 
@@ -34,6 +34,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
                 console.log("Data sorted per year !");
+
+                //creating top 10 name list
+                groupByName();
+                console.log("grouped by best names");
 
                 // Creating random colors for each name
                 all_data.forEach(element => {
