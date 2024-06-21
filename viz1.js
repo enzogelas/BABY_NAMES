@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
     slider = document.getElementById("year")
         slider.addEventListener("change", event => {
             document.getElementById("yearValue").innerHTML = slider.value;
+            updateBars();
       });
     
 
@@ -92,9 +93,55 @@ function play(){
 
     document.getElementById("year").value = parseInt(document.getElementById("year").value) + 1;
     document.getElementById("yearValue").innerHTML = document.getElementById("year").value;
+
+    updateBars();
     
     if(parseInt(document.getElementById("year").value)>=2020){
         clearInterval(timer);
     }
     
+}
+
+function updateBars(){
+    let year = parseInt(document.getElementById("year").value);
+
+    groupByNameForYear(year);
+    
+}
+
+function groupByNameForYear(year) {
+
+    let nameCount = {};
+
+    data_per_year[year].forEach(element => {
+        const name = element[1];
+        if (!(name in nameCount)){
+            nameCount[name] = element[4] ;
+        }
+        else {
+            nameCount[name] += element[4]
+        }
+    })
+
+    console.log("Names counted for year " + year);
+
+
+    let ten_best_names = [];
+
+
+    while(ten_best_names.length<10) {
+
+        maxCount = 0;
+        maxName = "";
+        for(const name in nameCount){
+            if( (nameCount[name] > maxCount) && !(ten_best_names.includes(name))) {
+                maxCount = nameCount[name];
+                maxName = name;
+            }
+        }
+        ten_best_names.push(maxName);
+    }
+
+    return ten_best_names;
+
 }
