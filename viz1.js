@@ -12,7 +12,6 @@ let searchedName = '';
 
 document.getElementById("yearValue").innerHTML = document.getElementById("year").value;
 
-
 document.addEventListener('DOMContentLoaded', function () {
     svgContainer = document.getElementById('race-container');
 
@@ -38,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log("Data sorted per year !");
 
                 //creating top 10 name list
-                groupByName();
-                console.log("grouped by best names");
+                //groupByName();
+                //console.log("grouped by best names");
 
                 // Creating random colors for each name
                 all_data.forEach(element => {
@@ -51,6 +50,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log("Colors created for names");
 
                 //document.getElementById('title').textContent = "Explore the names in France"; 
+
+                updateBars();
+
             })
 
         // Slider management
@@ -69,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
         //    yearDisplay.textContent = year.toString();
             
         //});
-
         
     })
 
@@ -79,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
             updateBars();
       });
     
+
 
 let timer = null;
 
@@ -116,11 +118,12 @@ function updateBars(){
         //Update name
         document.getElementById("name" + i).innerHTML = ten_best_names[i];
 
-        //Update bar width
+        //Update bar width and color
         document.getElementById("value" + i).setAttribute("width", nameCount[ten_best_names[i]]*scale_factor);
+        document.getElementById("value" + i).setAttribute("fill", colorPerName[ten_best_names[i]]);
 
         //Update legend
-        document.getElementById("textValue" + i).setAttribute("x", nameCount[ten_best_names[i]]*scale_factor);
+        document.getElementById("textValue" + i).setAttribute("x", 130+nameCount[ten_best_names[i]]*scale_factor);
         document.getElementById("textValue" + i).innerHTML = nameCount[ten_best_names[i]];
     }
 
