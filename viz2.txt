@@ -2,13 +2,14 @@ We see the most popular name for each département.
 
 Pros:
 - very easy to see if one name is popular for the entire country
-- if the visualisatio scrolls the years automatically, we can see the spreading of a name (where it started getting popular, and how it spreads)
+- if the visualisation scrolls through the years automatically, we can see the spreading of a name (where it started getting popular, and how it spreads)
+- possibility to see the evolution of the popularity of a chosen name accross the different départements
 
 Cons: 
 - not easy to see if some names are more popular/time consistent in a given region, because we only take the most popular name
 
 Potential ameliorations:
-- differentiate gril/boys
+- differentiate girls/boys
 - add an option to focus on a specific area
 - add an option to see more names
-- potentially, follow the popularity of a specific name through time (could color according to the ratio babies having this name on babies born this year)
+
