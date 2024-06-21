@@ -1,7 +1,10 @@
-
+We see a timeline of the most popular names per year, separated by gender. This way, we can see tendencies for the two genders and how they change over time.
 
 Pros:
-
+    - Easy to read and understand.
+    - We can see all the most popular names over time at once.
+    - We can see how long a name has been popular for.
 Cons:
-
+    - Comparison between gender only in the temporal dimension.
 Potential ameliorations:
+    - Possibility to filter by region.

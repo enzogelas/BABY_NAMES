@@ -1,7 +1,7 @@
 We see a top of names given to babies for each year.
 
 Pros:
-- Can easily see which names are popular at a given point
+- Can easily see which names are popular at a given point, and see the evolution of the popularity of a name
 - can see which names stay popular from one year to another, and their potential decline in popularity
 
 Cons:
