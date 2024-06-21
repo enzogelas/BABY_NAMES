@@ -72,3 +72,16 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById("yearValue").innerHTML = slider.value;
       });
     
+
+function startPlaying(){
+    let startYear = document.getElementById("yearValue");
+    console.log("started playing !");
+    console.log(startYear);
+    setInterval(play, 10000*(2020-startYear));
+}
+
+function play(){
+    //document.getElementById("year").value +=1;
+    //document.getElementById("yearValue").innerHTML = document.getElementById("year").value;
+    
+}
