@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Creating the display of the svg bars
-    
+    console.log("test")
 
         // Loading of the data
         fetch('dpt2020.json')
@@ -44,23 +44,31 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 console.log("Colors created for names");
 
-                document.getElementById('title').textContent = "Explore the names in France"; 
+                //document.getElementById('title').textContent = "Explore the names in France"; 
             })
 
         // Slider management
 
         // SLiders
         let yearInput = document.getElementById('year');
+        
         // Values displayed below sliders
         let yearDisplay = document.getElementById('yearValue');
         // Year Interval 
         let year = 1900;
       
 
-        document.getElementById('year').addEventListener('input', () => {
-            year = parseInt(yearInput.value);
-            yearDisplay.textContent = year.toString();
+        //document.getElementById('year').addEventListener('input', () => {
+        //    year = parseInt(yearInput.value);
+        //    yearDisplay.textContent = year.toString();
             
-        });
+        //});
+
+
 
     })
+
+    slider = document.getElementById("year")
+    slider.addEventListener("change", event => {
+        document.getElementById("yearValue").innerHTML = slider.value;
+      });
