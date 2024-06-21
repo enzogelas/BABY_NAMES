@@ -108,12 +108,20 @@ function updateBars(){
     let nameCount = groupByNameForYear(year)[0];
     let ten_best_names = groupByNameForYear(year)[1];
     
-    //let scale_factor = 
+    let max_width = 750;
+    let scale_factor = max_width/nameCount[ten_best_names[0]];
+    
 
     for(let i=0; i<10; i++) {
+        //Update name
         document.getElementById("name" + i).innerHTML = ten_best_names[i];
-        console.log(nameCount[ten_best_names[i]]);
-        document.getElementById("value" + i).setAttribute("width", nameCount[ten_best_names[i]]/100);
+
+        //Update bar width
+        document.getElementById("value" + i).setAttribute("width", nameCount[ten_best_names[i]]*scale_factor);
+
+        //Update legend
+        document.getElementById("textValue" + i).setAttribute("x", nameCount[ten_best_names[i]]*scale_factor);
+        document.getElementById("textValue" + i).innerHTML = nameCount[ten_best_names[i]];
     }
 
 }
