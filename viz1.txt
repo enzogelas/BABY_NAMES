@@ -1,0 +1,14 @@
+We see a top of names given to babies for each year.
+
+Pros:
+- Can easily see which names are popular at a given point
+- can see which names stay popular from one year to another, and their potential decline in popularity
+
+Cons:
+- not easy to compare years together
+- no info on unpopular names
+
+Potential ameliorations:
+- offer a small-multiple option for the user to compare specific years after they have seen the global animation
+- pick a color scheme to easily diferentiate boys and girls, or do two vizualisations depending on gender assigned at birth
+- could add the same vizualisations for least popular names
