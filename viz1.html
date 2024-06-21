@@ -8,11 +8,12 @@
         
     </head>
     <body>
+        <div id="MAIN_DIV">
 
             <h1 id="title"></h1>
 
             <div id="race-container">
-                <svg width="800" height="800">
+                <svg width="800" height="400">
                     <!-- Axe des ordonnées
                     <line x1="50" y1="50" x2="50" y2="350" stroke="black" stroke-width="2" />
                       -- Axe des abscisses
@@ -58,9 +59,9 @@
                     <input id="year" type="range" min="1900" max="2020" value="1900">
                     <span id="yearValue">1900</span>
                 </div>
-
             </div>
 
+            <button id="play_button" onclick="startPlaying()">Play</button>
         </div>
 
         <script src="viz1.js"></script>
