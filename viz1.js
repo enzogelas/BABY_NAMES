@@ -7,7 +7,7 @@ let svgContainer;
 let paths;
 let labels = Array(96);
 
-
+let best_10names_per_year = Array.from({ length: 2021 }, () => [],[]); //indice annee,  [compte],[noms]
 let mode = 0;
 let searchedName = '';
 
@@ -35,6 +35,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
                 console.log("Data sorted per year !");
+
+                //creating top 10 name list
+                groupByName();
+                console.log("grouped by best names");
 
                 // Creating random colors for each name
                 all_data.forEach(element => {
@@ -64,6 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
             yearDisplay.textContent = year.toString();
 
               minYearDisplay.textContent = minYear.toString();
+              //lou ici tu mets un truc pour lire les valeurs du tableau top10bestnamesperyear
+              //
 
           });
   
@@ -96,22 +102,18 @@ function createLabel(path,labelText){
 // It show the most popular name for a fixed year (not used anymore but interesting)
 function showDataOneYear(year){ 
 
-    let maxPerDpt = Array(96).fill(0);
-    let namePerDpt = Array(96).fill("");
-
     let max10ppl = Array(10).fill("");
     let max10 = Array(10).fill(0);
 
-    data_per_year[year].forEach(element => {
-        const dpt = element[3];
+    best_10names_per_year[year].forEach(element => {
+        
 
-        if(element[4] > maxPerDpt[dpt]){
-            namePerDpt[dpt] = element[1];
-            maxPerDpt[dpt] = element[4]
-        }
+            names=element[1]
+            count = element[0]
+        })
 
-    })
-}
+    }
+
 
 function groupByName(){
 
