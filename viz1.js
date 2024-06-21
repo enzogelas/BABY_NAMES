@@ -12,6 +12,11 @@ let searchedName = '';
 
 document.getElementById("yearValue").innerHTML = document.getElementById("year").value;
 
+let timer;
+clearInterval(timer);
+
+let isPlaying = false;
+
 document.addEventListener('DOMContentLoaded', function () {
     svgContainer = document.getElementById('race-container');
 
@@ -76,18 +81,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     slider = document.getElementById("year")
         slider.addEventListener("change", event => {
+            clearInterval(timer);
+
             document.getElementById("yearValue").innerHTML = slider.value;
             updateBars();
       });
     
 
 
-let timer = null;
-
 function startPlaying(){
+
+    isPlaying = !isPlaying;
     console.log("started playing !");
 
-    timer = setInterval(play, 500);
+    clearInterval(timer);
+
+    if(isPlaying){
+        timer = setInterval(play, 750);
+    }
     
 }
 
