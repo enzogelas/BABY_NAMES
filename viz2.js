@@ -144,7 +144,7 @@ function createLabel(path,labelText){
     text.setAttribute("text-anchor", "middle");
     text.setAttribute("alignment-baseline", "central");
     text.style.fontSize = "12px";
-    text.style.fill = "black"; // Set the text color
+    text.style.fill = "white"; // Set the text color
     text.textContent = labelText; // Replace with your actual label
 
     // Append the text element to the SVG container
@@ -225,6 +225,7 @@ function showDataManyYears(min, max){
     paths.forEach(path => {
         const dpt = parseInt(path.id);
 
+        path.style.fill = 'white';
         path.style.fill = colorPerName[popularNamePerDpt[dpt]];
         labels[dpt].textContent = popularNamePerDpt[dpt];
     })
@@ -243,19 +244,20 @@ function showDataByName(searchedName,min,max){
             const dpt = element[3];
             const name = element[1];
 
-            if(dpt<=95 && name==searchedName){ //To exclude non wanted dpt
+            if(dpt<=95 && name==searchedName){ //To exclude non wanted dpt (ie dpt > 95)
                 countPerDpt[dpt] = countPerDpt[dpt] + element[4];   
             }
 
         });
     }
 
+    // Finding the min and max count departments, to arrange the color scale
     let minCount = countPerDpt[0];
     let maxCount = countPerDpt[0];
     for(let j=1; j<=95; j++){
         let value = countPerDpt[j];
-        if(value>max) maxCount=value;
-        if(value<min) minCount=value;
+        if(value>maxCount) maxCount=value;
+        if(value<minCount) minCount=value;
     }
 
     function fromValueToColor(value){
@@ -269,6 +271,7 @@ function showDataByName(searchedName,min,max){
         const dpt = parseInt(path.id);
 
         labels[dpt].textContent = countPerDpt[dpt].toString();
+
         path.style.fill = fromValueToColor(countPerDpt[dpt]);
     })
 }
