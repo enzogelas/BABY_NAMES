@@ -1,0 +1,32 @@
+div{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#MAIN_DIV{
+    height: 100%;
+    width: 100%;
+}
+
+.ver{
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.hor{
+    flex-direction: row;
+}
+
+.wide{
+    width: 100%;
+    justify-content: space-around;
+}
+
+.large{
+    width: 40%;
+}
+
+input[type="range"]{
+    width: 100%;
+}
